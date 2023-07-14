@@ -4,9 +4,8 @@ import streamlit as st
 st.title("💬 Hanad's GPT :sunglasses:")
 
 with st.sidebar:
-    openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
-
-# openai.api_key = "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"
+    openai_api_key = st.text_input(
+        "OpenAI API Key", key="chatbot_api_key", type="password")
 
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-3.5-turbo"
@@ -24,7 +23,7 @@ if prompt := st.chat_input("Send a message"):
     if not openai_api_key:
         st.info("Please add your OpenAI API key to continue.")
         st.stop()
-    
+
     openai.api_key = openai_api_key
 
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -45,4 +44,5 @@ if prompt := st.chat_input("Send a message"):
             full_response += response.choices[0].delta.get("content", "")
             message_placeholder.markdown(full_response + "▌")
         message_placeholder.markdown(full_response)
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
+    st.session_state.messages.append(
+        {"role": "assistant", "content": full_response})
